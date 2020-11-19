@@ -3,8 +3,8 @@
 const { assert } = require('console');
 const vscode = require('vscode');
 const xmldoc = require('xmldoc');
-const { GoNode } = require('./gonode');
-const { GoStruct } = require('./gostruct');
+const { GoNode } = require('./lib/gonode');
+const { GoStruct } = require('./lib/gostruct');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
