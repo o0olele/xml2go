@@ -28,13 +28,13 @@ function activate(context) {
 		vscode.window.showInformationMessage('Hello World from xml2go!');
 
 		// Get the active text editor
-        const editor = vscode.window.activeTextEditor;
+		const editor = vscode.window.activeTextEditor;
 
-        if (editor) {
-            let document = editor.document;
+		if (editor) {
+			let document = editor.document;
 
-            // Get the document text
-            const documentText = document.getText();
+			// Get the document text
+			const documentText = document.getText();
 
 			// DO SOMETHING WITH `documentText`
 			var xml = new xmldoc.XmlDocument(documentText);
@@ -45,7 +45,18 @@ function activate(context) {
 			p.Parse();
 			console.log(p.GetGoText());
 
-        }
+			let options = {
+				content: p.GetGoText(),
+				language: "go"
+			};
+
+			vscode.workspace.openTextDocument(options).then(doc => {
+				vscode.window.showTextDocument(doc, {viewColumn: vscode.ViewColumn.Beside});
+			}, err => {
+				vscode.window.showErrorMessage(err);
+			});
+
+		}
 	});
 
 	context.subscriptions.push(disposable);
@@ -69,7 +80,7 @@ function ParseXml(params) {
 
 	for (var i in params.children) {
 		var _sub = ParseXml(params.children[i])
-		if (_sub != null ) {
+		if (_sub != null) {
 			_node.PushChild(_sub.GetName(), _sub)
 		}
 	}
